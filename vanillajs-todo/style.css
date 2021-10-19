@@ -1,0 +1,45 @@
+body {
+	background: rgb(34, 193, 195);
+	background: no-repeat fixed
+		linear-gradient(
+			-45deg,
+			rgba(34, 193, 195, 1) 0%,
+			rgba(253, 187, 45, 1) 100%
+		);
+}
+
+input{
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 70%;
+}
+
+.btn:focus{
+    box-shadow: none;
+}
+
+.box{
+    background: rgba(255, 255, 255, 0.384);
+    width: 600px;
+}
+
+.bg-list-item{
+    background: rgba(255, 255, 255, 0.384);
+}
+
+.trash{
+    color:sandybrown;
+    font-size: 1.5rem; 
+    cursor: pointer;
+}
+
+textarea{
+    width: 100%;
+    height: 100px;
+    border: none;
+    outline: none;
+}
+.w-textarea{
+    width: 70%;
+}
