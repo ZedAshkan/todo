@@ -18,57 +18,95 @@
 
 <body>
 
-	<div class="container">
-		<div class="mt-2 mx-auto box rounded-3 p-3">
-			<div class="text-center mb-3">
-				<h1 class="fs-2">Todo List</h1>
-			</div>
-
-			<ol class="list-group list-group-numbered mx-4">
-
-				<li class="list-group-item d-flex justify-content-between align-items-start bg-list-item mb-1">
-					<div class="ms-2 me-auto">
-						<div class="fw-bold">add a todo</div>
-						add some things you need to do
-					</div>
-					<i class="bi bi-trash-fill align-self-center trash"></i>
-				</li>
-
-				<li class="list-group-item d-flex justify-content-between align-items-start bg-list-item mb-1">
-					<div class="ms-2 me-auto">
-						<div class="fw-bold">remove a todo</div>
-						remove some things you do
-					</div>
-					<i class="bi bi-trash-fill align-self-center trash"></i>
-				</li>
-
-				<li class="list-group-item d-flex justify-content-between align-items-start bg-list-item mb-1">
-					<div class="ms-2 me-auto">
-						<div class="fw-bold">have fun</div>
-						be happy
-					</div>
-					<i class="bi bi-trash-fill align-self-center trash"></i>
-				</li>
-			</ol>
-
-			<div>
-				<p class="m-0 p-0 fs-3 text-center">add a new todo...</p>
-				<form id="addTodo" class="text-center">
-					<input type="text" name="title" id="title"
-						class="bg-transparent border border-2 border-success rounded-3 mb-2" placeholder="title">
-					<div class="position-relative w-textarea mx-auto">
-						<textarea name="description" id="description"
-							class="bg-transparent border border-2 border-success rounded-3" placeholder="description"></textarea>
-
-						<button class="btn position-absolute bottom-0 end-0 fs-3"><i class="bi bi-plus-circle" style="color:tomato;"></i></button>
-					</div>
-				</form>
-				<p id="error"></p>
+	<div class="modal fade" id="Modal-add-todo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content modal-todo">
+				<div class="modal-header pb-0">
+					<h5 class="modal-title" id="exampleModalLabel">Add Todo ...</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<input name="title" class="w-100 bg-transparent" type="text" placeholder="Title">
+						<textarea name="subtitle" class="bg-transparent" placeholder="Description"></textarea>
+						<div class="d-flex justify-content-between">
+							<div></div>
+							<button class="btn add" data-bs-dismiss="modal">Add</button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
-
 	</div>
 
+	<div class="container my-5 box">
+		<div class="row">
+			<div class="col">
+				<div class="do-box">
+
+					<div class="d-flex justify-content-between align-items-center">
+						<span class="mx-3 fs-5 py-3">Todo</span>
+						<button class="btn mx-1" data-bs-toggle="modal" data-bs-target="#Modal-add-todo">
+							<i class="bi bi-plus-square fs-3"></i>
+						</button>
+					</div>
+
+					<div id="todo-list" class="box-content p-2">
+					</div>
+
+				</div>
+			</div>
+			<div class="col">
+				<div class="do-box">
+
+					<div class="py-3">
+						<span class="mx-3 fs-5">Progress</span>
+					</div>
+					<div class="box-content p-2">
+
+						<div class="bg-white m-2 mb-4 shadow-lg mission-box">
+							<div class="d-flex justify-content-between align-items-center py-2">
+								<span class="mx-3">add some Todo</span>
+								<span class="fs-4 mx-3"><i class="bi bi-trash" style="color: #ea4c89;"></i></span>
+							</div>
+							<div class="text-mission text-muted p-3 pt-0">
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, consectetur facilis.
+								Quo, quas officiis animi quam, eaque rerum aperiam architecto nisi obcaecati odio quis
+								quod nihil nobis soluta aliquid. Adipisci?
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="do-box">
+
+					<div class="py-3">
+						<span class="mx-3 fs-5">Completed</span>
+					</div>
+					<div class="box-content p-2">
+
+						<div class="bg-white m-2 mb-4 shadow-lg mission-box">
+							<div class="d-flex justify-content-between align-items-center py-2">
+								<span class="mx-3">add some Todo</span>
+								<span class="fs-4 mx-3"><i class="bi bi-trash" style="color: #ea4c89;"></i></span>
+							</div>
+							<div class="text-mission text-muted p-3 pt-0">
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, consectetur facilis.
+								Quo, quas officiis animi quam, eaque rerum aperiam architecto nisi obcaecati odio quis
+								quod nihil nobis soluta aliquid. Adipisci?
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+		crossorigin="anonymous"></script>
 	<script src="./script.js"></script>
 </body>
 
