@@ -1,50 +1,47 @@
-const addTodo = document.querySelector('#addTodo');
-const list = document.querySelector('ol');
-const error = document.querySelector('#error');
-const title = document.querySelector('#title')
+const form = document.querySelector('form')
+const todoList = document.querySelector('#todo-list')
 
-addTodo.addEventListener('submit', e => {
+let listTodos = [
+	{title: "add a todo", description: `add some things you need to do` },
+	{title: "remove a todo", description: `remove some things you do` },
+	{title: "have fun", description: `be happy` },
+]
 
-	e.preventDefault();
+let listProgress = []
 
-	const titleV = document.querySelector('#title').value.trim();
-	const descriptionV = document.querySelector('#description').value.trim();
+let listCompleted = []
 
-	makeTodo(titleV, descriptionV)
-})
 
-title.addEventListener('keyup', e => {
-	let titleVL = document.querySelector('#title').value.trim()
-	if (titleVL.length != 0) {
-		title.classList.remove('border-danger')
-		title.classList.add('border-success')
-	}
-})
-
-const makeTodo = (titleV, descriptionV) => {
-
-	const todo = `
-    <li class="list-group-item d-flex justify-content-between align-items-start bg-list-item mb-1">
-        <div class="ms-2 me-auto">
-            <div class="fw-bold">${titleV}</div>
-            ${descriptionV}
-        </div>
-        <i class="bi bi-trash-fill align-self-center trash"></i>
-    </li>
-    `;
-
-	if (titleV == '') {
-		title.classList.add('border-danger')
-		title.classList.remove('border-success')
-	} else {
-		title.classList.remove('border-danger')
-		title.classList.add('border-success')
-		list.innerHTML += todo;
-		addTodo.reset()
-	}
+const listMaker = (list , place) => {
+	place.innerHTML = ``;
+	list.map(todo => {
+		place.innerHTML += `
+			<div class="bg-white m-2 mb-4 shadow-lg mission-box">
+				<div class="d-flex justify-content-between align-items-center py-2">
+					<span class="mx-3">${todo.title}</span>
+					<span class="fs-4 mx-3"><i class="bi bi-trash"></i></span>
+				</div>
+				<div class="text-mission text-muted p-3 pt-0">
+					${todo.description}
+				</div>
+			</div>
+		`
+	})
 }
 
-list.addEventListener('click', e => {
-	if (e.target.classList.contains('trash'))
-		e.target.parentElement.remove()
+
+listMaker(listTodos,todoList)
+
+form.addEventListener('submit', e => {
+	e.preventDefault()
+	const title = form.title.value.trim()
+	const description = form.subtitle.value
+
+	const obg = {title,description}
+
+	listTodos.push(obg)
+
+	listMaker(listTodos,todoList)
+
+	form.reset()
 })
