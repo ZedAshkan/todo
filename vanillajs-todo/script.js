@@ -11,6 +11,17 @@ let listTodos = [
 let listProgress = []
 let listCompleted = []
 
+if(localStorage.getItem('todos')){
+	listTodos = JSON.parse(localStorage.getItem('todos'))
+}
+if(localStorage.getItem('progress')){
+	listProgress = JSON.parse(localStorage.getItem('progress'))
+	console.log('progress')
+}
+if(localStorage.getItem('completed')){
+	listCompleted = JSON.parse(localStorage.getItem('completed'))
+}
+
 const listMaker = (list, place) => {
 	place.innerHTML = ``;
 	list.map(todo => {
@@ -66,7 +77,8 @@ const objMaker = (list, title, description) => {
 }
 
 listMaker(listTodos, todoList)
-
+listMaker(listProgress, progressList)
+	listMaker(listCompleted, completedList)
 form.addEventListener('submit', e => {
 	e.preventDefault()
 	const title = form.title.value.trim()
@@ -77,6 +89,7 @@ form.addEventListener('submit', e => {
 	listMaker(listTodos, todoList)
 
 	form.reset()
+	localStorage.setItem('todos', JSON.stringify(listTodos))
 })
 
 todoList.addEventListener('click', e => {
@@ -91,7 +104,7 @@ todoList.addEventListener('click', e => {
 	if (e.target.classList.contains('next')) {
 
 		if (listProgress.length == 0) {
-			listProgressPre = listTodos.filter(todo => {
+			listProgress = listTodos.filter(todo => {
 				return todo.id == e.target.getAttribute('data-id')
 			})
 
@@ -101,6 +114,9 @@ todoList.addEventListener('click', e => {
 		}
 	}
 
+	localStorage.setItem('todos', JSON.stringify(listTodos))
+	localStorage.setItem('progress' ,JSON.stringify(listProgress))
+	localStorage.setItem('completed',JSON.stringify(listCompleted))
 	listMaker(listTodos, todoList)
 	listMaker(listProgress, progressList)
 })
@@ -108,14 +124,17 @@ todoList.addEventListener('click', e => {
 progressList.addEventListener('click', e => {
 	if (e.target.classList.contains('prev')) {
 
-		listTodos.push(listProgress[0])
+		listTodos.unshift(listProgress[0])
 		listProgress.pop()
 	}
 	if (e.target.classList.contains('next')) {
-		listCompleted.push(listProgress[0])
+		listCompleted.unshift(listProgress[0])
 		listProgress.pop()
 	}
 
+	localStorage.setItem('todos', JSON.stringify(listTodos))
+	localStorage.setItem('progress' ,JSON.stringify(listProgress))
+	localStorage.setItem('completed',JSON.stringify(listCompleted))
 	listMaker(listTodos, todoList)
 	listMaker(listProgress, progressList)
 	listMaker(listCompleted, completedList)
