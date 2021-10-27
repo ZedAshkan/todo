@@ -2,6 +2,7 @@ const form = document.querySelector('form')
 const todoList = document.querySelector('#todo-list')
 const progressList = document.querySelector('#progress')
 const completedList = document.querySelector('#completed')
+const toastLive = document.querySelector('#toast')
 
 let listTodos = [
 	{ id: 1, title: "add a todo", description: `add some things you need to do` },
@@ -11,14 +12,14 @@ let listTodos = [
 let listProgress = []
 let listCompleted = []
 
-if(localStorage.getItem('todos')){
+if (localStorage.getItem('todos')) {
 	listTodos = JSON.parse(localStorage.getItem('todos'))
 }
-if(localStorage.getItem('progress')){
+if (localStorage.getItem('progress')) {
 	listProgress = JSON.parse(localStorage.getItem('progress'))
 	console.log('progress')
 }
-if(localStorage.getItem('completed')){
+if (localStorage.getItem('completed')) {
 	listCompleted = JSON.parse(localStorage.getItem('completed'))
 }
 
@@ -78,18 +79,23 @@ const objMaker = (list, title, description) => {
 
 listMaker(listTodos, todoList)
 listMaker(listProgress, progressList)
-	listMaker(listCompleted, completedList)
+listMaker(listCompleted, completedList)
+
 form.addEventListener('submit', e => {
 	e.preventDefault()
 	const title = form.title.value.trim()
 	const description = form.subtitle.value
+	if (title.length == 0) {
+		form.title.classList.add('border-danger')
+	} else {
+		form.title.classList.add('border-white')
+		objMaker(listTodos, title, description)
 
-	objMaker(listTodos, title, description)
+		listMaker(listTodos, todoList)
 
-	listMaker(listTodos, todoList)
-
-	form.reset()
-	localStorage.setItem('todos', JSON.stringify(listTodos))
+		form.reset()
+		localStorage.setItem('todos', JSON.stringify(listTodos))
+	}
 })
 
 todoList.addEventListener('click', e => {
@@ -103,6 +109,12 @@ todoList.addEventListener('click', e => {
 
 	if (e.target.classList.contains('next')) {
 
+		if(listProgress.length == 1){
+			let toast = new bootstrap.Toast(toastLive)
+
+			toast.show()
+		}
+		
 		if (listProgress.length == 0) {
 			listProgress = listTodos.filter(todo => {
 				return todo.id == e.target.getAttribute('data-id')
@@ -111,12 +123,13 @@ todoList.addEventListener('click', e => {
 			listTodos = listTodos.filter(todo => {
 				return todo.id != e.target.getAttribute('data-id')
 			})
-		}
+		} 
+		
 	}
 
 	localStorage.setItem('todos', JSON.stringify(listTodos))
-	localStorage.setItem('progress' ,JSON.stringify(listProgress))
-	localStorage.setItem('completed',JSON.stringify(listCompleted))
+	localStorage.setItem('progress', JSON.stringify(listProgress))
+	localStorage.setItem('completed', JSON.stringify(listCompleted))
 	listMaker(listTodos, todoList)
 	listMaker(listProgress, progressList)
 })
@@ -133,8 +146,8 @@ progressList.addEventListener('click', e => {
 	}
 
 	localStorage.setItem('todos', JSON.stringify(listTodos))
-	localStorage.setItem('progress' ,JSON.stringify(listProgress))
-	localStorage.setItem('completed',JSON.stringify(listCompleted))
+	localStorage.setItem('progress', JSON.stringify(listProgress))
+	localStorage.setItem('completed', JSON.stringify(listCompleted))
 	listMaker(listTodos, todoList)
 	listMaker(listProgress, progressList)
 	listMaker(listCompleted, completedList)

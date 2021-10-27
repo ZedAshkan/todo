@@ -80,3 +80,9 @@ textarea{
     cursor: pointer;
     color: #ea4c89;
 }
+
+.toast-s{
+    background: #ff9400;
+    color: #fff;
+    border-radius: 20px;
+}
