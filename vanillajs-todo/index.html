@@ -27,12 +27,29 @@
 				</div>
 				<div class="modal-body">
 					<form>
-						<input name="title" class="w-100 bg-transparent" type="text" placeholder="Title">
+
+						<div class="d-flex align-items-center pb-2">
+							<label class="mx-3 fs-5" for="priority">Priority</label>
+							<select class="form-select bg-transparent" id="priority">
+								<option selected>Low</option>
+								<option value="Medium">Medium</option>
+								<option value="High">High</option>
+							</select>
+						</div>
+
+						<div class="pb-2">
+							<input name="time" class="bg-transparent w-100" min="2018-06-07T00:00" type="datetime-local">
+						</div>
+
+						<input name="title" class="w-100 bg-transparent" autocomplete="off" type="text" placeholder="Title">
+
 						<textarea name="subtitle" class="bg-transparent" placeholder="Description"></textarea>
+
 						<div class="d-flex justify-content-between">
 							<div></div>
-							<button class="btn add" data-bs-dismiss="modal">Add</button>
+							<button class="btn add" >Add</button>
 						</div>
+
 					</form>
 				</div>
 			</div>
