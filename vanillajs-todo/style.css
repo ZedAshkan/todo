@@ -55,6 +55,14 @@ textarea {
 	border-radius: 30px;
 }
 
+header{
+	border-bottom-left-radius: 30px;
+	border-bottom-right-radius: 30px;
+}
+footer{
+	border-top-left-radius: 30px;
+	border-top-right-radius: 30px;
+}
 .do-box {
 	background-color: #e8f1f0;
 	margin-top: 20px;
