@@ -6,6 +6,11 @@ body {
 	box-shadow: none;
 }
 
+.form-select:focus {
+	box-shadow: none;
+	border-color: #fff;
+}
+
 .btn-close:focus {
 	box-shadow: none;
 }
@@ -29,6 +34,14 @@ input {
 	border-radius: 10px;
 	height: 40px;
 	font-size: 1.5rem;
+	padding-left: 10px;
+}
+
+.select{
+	outline: none;
+	border: solid 2px #fff;
+	border-radius: 10px;
+	height: 40px;
 	padding-left: 10px;
 }
 

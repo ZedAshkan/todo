@@ -28,9 +28,11 @@
 				<div class="modal-body">
 					<form>
 
+						<input name="title" class="w-100 bg-transparent mb-2" autocomplete="off" type="text" placeholder="Title">
+
 						<div class="d-flex align-items-center pb-2">
-							<label class="mx-3 fs-5" for="priority">Priority</label>
-							<select class="form-select bg-transparent" id="priority">
+							<label class="mx-3 fs-5" for="priority">Priority:</label>
+							<select class="form-select bg-transparent select" id="priority">
 								<option selected>Low</option>
 								<option value="Medium">Medium</option>
 								<option value="High">High</option>
@@ -41,13 +43,11 @@
 							<input name="time" class="bg-transparent w-100" min="2018-06-07T00:00" type="datetime-local">
 						</div>
 
-						<input name="title" class="w-100 bg-transparent" autocomplete="off" type="text" placeholder="Title">
-
 						<textarea name="subtitle" class="bg-transparent" placeholder="Description"></textarea>
 
 						<div class="d-flex justify-content-between">
 							<div></div>
-							<button class="btn add" >Add</button>
+							<button class="btn add" data-bs-dismiss="modal">Add</button>
 						</div>
 
 					</form>
@@ -97,16 +97,7 @@
 		</div>
 	</div>
 
-	<footer class="container bg-white" style="height: 150px;">
-		<div id="icons-social" class="fs-1 text-center p-5">
-			<a href="https://github.com/ZedAshkan" class="link-dark" target="_blank"><i class="bi bi-github mx-3"></i></a>
-			<a href="https://instagram/ashkan_momenii" class="link-dark" target="_blank"><i class="bi bi-instagram mx-3 text-danger"></i></a>
-			<a href="https://ZedAshkan.atbox.io" class="link-dark" target="_blank"><i class="bi bi-globe2 mx-3 text-secondary"></i></a>
-			<a href="https://t.me/ZedAshkan" class="link-dark" target="_blank"><i class="bi bi-telegram mx-3 text-primary"></i></a>
-			<a href="https://twitter.com/zedashkan" class="link-dark" target="_blank"><i class="bi bi-twitter mx-3 text-info"></i></a>
-			
-		</div>
-	</footer>
+	
 	<div class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 11">
 		<div id="toast" class="toast align-items-center border-0 toast-s" data-bs-delay="1500">
 			<div class="d-flex">
@@ -120,6 +111,21 @@
 		</div>
 	</div>
 
+	<footer class="container bg-white" style="height: 150px;">
+		<div id="icons-social" class="fs-1 text-center p-5">
+			<a href="https://github.com/ZedAshkan" class="link-dark" target="_blank"><i class="bi bi-github mx-3"></i></a>
+			<a href="https://instagram/ashkan_momenii" class="link-dark" target="_blank"><i
+					class="bi bi-instagram mx-3 text-danger"></i></a>
+			<a href="https://ZedAshkan.atbox.io" class="link-dark" target="_blank"><i
+					class="bi bi-globe2 mx-3 text-secondary"></i></a>
+			<a href="https://t.me/ZedAshkan" class="link-dark" target="_blank"><i
+					class="bi bi-telegram mx-3 text-primary"></i></a>
+			<a href="https://twitter.com/zedashkan" class="link-dark" target="_blank"><i
+					class="bi bi-twitter mx-3 text-info"></i></a>
+
+		</div>
+	</footer>
+	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 		crossorigin="anonymous"></script>
