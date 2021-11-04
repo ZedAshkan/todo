@@ -252,3 +252,13 @@ progressList.addEventListener('click', e => {
 	}
 
 })
+
+completedList.addEventListener('click',e=>{
+	if(e.target.classList.contains('trash')){
+		listCompleted = listCompleted.filter(todo => {
+			return todo.id != e.target.getAttribute('data-id')
+		})
+		localStorage.setItem('completed', JSON.stringify(listCompleted))
+		listMaker(listCompleted, completedList)
+	}
+})
