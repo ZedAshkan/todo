@@ -7,22 +7,30 @@ const toastLive = document.querySelector('#toast')
 const timeNow = new Date().toLocaleString();
 const dateTimeNow = new Date(timeNow)
 const listTime = dateTimeNow.getTime() + 300000
+const epochNow = dateTimeNow.getTime()
 
-const deadLineSec = dateTimeNow.getTime() - listTime
+const deadLineSec = listTime - dateTimeNow.getTime()
 
-let h = Math.floor(sec / 3600000)
-let m = Math.floor(sec % 3600000 / 60000)
+let h = Math.floor(deadLineSec / 3600000)
+let m = Math.floor(deadLineSec % 3600000 / 60000)
+
+if (h <= 9) {
+	h = `0${h}`
+}
+
+if (m <= 9) {
+	m = `0${m}`
+}
+
+const deadLine = `${h} : ${m}`
 
 const fiveMinAfterNow = new Date(listTime).toLocaleString()
-console.log(timeNow)
-console.log(dateTimeNow)
 
 let listTodos = [
-	{ id: 1, title: "add a todo", description: `add some things you need to do`, time: fiveMinAfterNow },
-	{ id: 2, title: "remove a todo", description: `remove some things you do`, time: fiveMinAfterNow },
-	{ id: 3, title: "have fun", description: `be happy`, time: fiveMinAfterNow },
+	{ id: 1, title: "add a todo", description: `add some things you need to do`, time: fiveMinAfterNow, epoch: listTime ,priority:'Low'},
+	{ id: 2, title: "remove a todo", description: `remove some things you do`, time: fiveMinAfterNow, epoch: listTime ,priority:'Medium'},
+	{ id: 3, title: "have fun", description: `be happy`, time: fiveMinAfterNow, epoch: listTime ,priority:'High'},
 ]
-console
 let listProgress = []
 let listCompleted = []
 
@@ -39,7 +47,52 @@ if (localStorage.getItem('completed')) {
 
 const listMaker = (list, place) => {
 	place.innerHTML = ``;
+	
+	list.sort((a, b)=> {
+		return a.epoch - b.epoch;
+	});
+
 	list.map(todo => {
+		const timeNow = new Date().toLocaleString();
+		const dateTimeNow = new Date(timeNow)
+		const epochNow = dateTimeNow.getTime()
+		let deadLine = todo.epoch - epochNow
+		let day = Math.floor(deadLine / 86400000)
+		let h = Math.floor(deadLine / 3600000 % 24)
+		let m = Math.floor(deadLine % 3600000 / 60000)
+
+		let dayText = day + ` day ,`
+		if (day == 0) {
+			dayText = ``
+		}
+
+		let timePlace = ``
+		if (place == todoList || place == progressList) {
+
+			if (m <= 0 && h <= 0 && day <= 0) {
+				deadLineText = `<span>deadline : </span><span class="text-muted">Expire</span>`
+			} else {
+
+				if (h <= 9) {
+					h = `0${h}`
+				}
+
+				if (m <= 9) {
+					m = `0${m}`
+				}
+				deadLineText = `<span>deadline : </span><span class="text-muted">${dayText}${h} : ${m}</span>`
+			}
+
+			timePlace = `
+<div>
+	<span>Due Date : </span><span class="text-muted">${todo.time}</span>
+</div>
+<div>
+	${deadLineText}
+</div> 
+									`
+
+		}
 		let leftArrowIcon = `<i class="bi bi-arrow-bar-left prev" data-id="${todo.id}"></i>`
 		let rightArrowIcon = `<i class="bi bi-arrow-bar-right next" data-id="${todo.id}"></i>`
 		let trashIcon = ``
@@ -52,13 +105,20 @@ const listMaker = (list, place) => {
 			leftArrowIcon = ``
 			trashIcon = `<img class="trash" src="./assets/img/x.svg" alt="remove" data-id="${todo.id}">`
 		}
-
+		let priorityColor = ``
+		if(todo.priority == 'Low'){
+			priorityColor = `border-color: #53ab9a;`
+		}else if(todo.priority == 'Medium'){
+			priorityColor = `border-color: #ff9400;`			
+		}else if(todo.priority == 'High'){
+			priorityColor = `border-color: #f92901;`
+		}
 		place.innerHTML += `
 		<div class="bg-white m-2 mb-4 shadow-lg mission-box todo-card">
-							<div class="d-flex justify-content-between align-items-center py-2 title-box">
+							<div class="d-flex justify-content-between align-items-center py-2 title-box" style="${priorityColor}">
 								<div class="d-flex flex-column mx-3">
 									<span class="">${todo.title}</span>
-									<span class="fw-lighter priority">priority</span>
+									<span class="fw-lighter priority">${todo.priority}</span>
 								</div>
 								<span class="mx-3">
 									${trashIcon}
@@ -72,12 +132,7 @@ const listMaker = (list, place) => {
 									${leftArrowIcon}
 								</span>
 								<div class="d-flex flex-column time py-2">
-									<div>
-										<span>Due Date : </span><span class="text-muted">${todo.time}</span>
-									</div>
-									<div>
-										<span>deadline : </span><span class="text-muted">5 Hours</span>
-									</div>
+									${timePlace}
 								</div>
 								<span class="me-3">
 									${rightArrowIcon}
@@ -85,17 +140,22 @@ const listMaker = (list, place) => {
 							</div>
 						</div>
 		`
+		
 	})
 
 }
 
-const objMaker = (list, title, description) => {
-	const id = Math.floor(Math.random() * 100000)
-	const obj = { id, title, description }
-	list.push(obj)
+const timeMaker = (time) => {
+	const localTime = new Date(time).toLocaleString()
+	const epochTodo = new Date(localTime).getTime()
+	return { localTime, epochTodo }
 }
 
-// const 
+const objMaker = (list, title, description, time,priority) => {
+	const id = Math.floor(Math.random() * 100000)
+	const obj = { id, title, description, time: timeMaker(time).localTime, epoch: timeMaker(time).epochTodo , priority}
+	list.push(obj)
+}
 
 listMaker(listTodos, todoList)
 listMaker(listProgress, progressList)
@@ -124,7 +184,7 @@ form.addEventListener('submit', e => {
 		form.time.classList.add('border-danger')
 	} else {
 		form.title.classList.add('border-white')
-		objMaker(listTodos, title, description)
+		objMaker(listTodos, title, description, time ,priority)
 
 		listMaker(listTodos, todoList)
 
